@@ -103,7 +103,6 @@ cvs.addEventListener("mousemove", movePaddle);
 function movePaddle(evt){
     let rect = cvs.getBoundingClientRect();
     user.y = evt.clientY - rect.top - user.height/2;
-
 }
 
 
@@ -128,6 +127,10 @@ function update(){
     ball.x += ball.velocitX;
     ball.y += ball.velocitY;
 
+    //simple AI to control the computer paddle
+    let computerLevel = 0.1;
+    com.y += (ball.y - (com.y + com.height/2)) * computerLevel;
+
     if(ball.y + ball.radius > cvs.height || ball.y - ball.radius < 0){
         ball.velocitY = -ball.velocitY;
     }
@@ -135,6 +138,7 @@ function update(){
     let player = (ball.x < cvs.width/2)? user:com;
 
     if(collision(ball,player)){
+        
 
     }
 }
