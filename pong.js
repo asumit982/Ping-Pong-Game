@@ -164,7 +164,7 @@ function update(){
         ball.velocitY = ball.speed * Math.sin(angleRad);
 
         // everytime the ball hit a paddle, we increase its speed
-        ball.speed += 0.3;
+        ball.speed += 0.5;
     }
     
     //update the score
