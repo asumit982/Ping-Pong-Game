@@ -33,6 +33,26 @@ const ball = {
     color : "WHITE"
 }
 
+//Render the Game
+function render(){
+    //clear the canvas
+    drawRect(0,0,cvs.width,cvs.height,"BLACK");
+
+    //draw the net
+    drawNet();
+
+    drawText(user.score,cvs.width/4,cvs.height/5,"WHITE");
+    drawText(com.score,3*cvs.width/4,cvs.height/5,"WHITE");
+
+    //draw the user and com paddle
+    drawRect(user.x, user.color, user.width, user.height, user.color);    
+    drawRect(com.x, com.color, com.width, com.height, com.color);    
+
+    //draw the ball
+    drawCircle(ball.x,ball.y,ball.radius,ball.color);
+
+}
+
 
 
 //draw rect function
