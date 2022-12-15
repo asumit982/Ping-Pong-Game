@@ -96,6 +96,16 @@ function render(){
 
 }
 
+// control the user padde
+
+cvs.addEventListener("mousemove", movePaddle);
+
+function movePaddle(evt){
+    let rect = cvs.getBoundingClientRect();
+    user.y = evt.clientY - rect.top - user.height/2;
+
+}
+
 
 //collision detection
 function collision(b,p){
