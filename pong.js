@@ -22,6 +22,17 @@ const com = {
     score : 0
 }
 
+//create the ball
+const ball = {
+    x : cvs.width/2,
+    y : cvs.height/2,
+    radius : 10,
+    speed : 5,
+    velocitX : 5,
+    velocitY : 5,
+    color : "WHITE"
+}
+
 
 
 //draw rect function
