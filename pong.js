@@ -164,19 +164,36 @@ function update(){
         ball.velocitY = ball.speed * Math.sin(angleRad);
 
         // everytime the ball hit a paddle, we increase its speed
-        ball.speed += 0.1;
+        ball.speed += 0.3;
     }
-
+    
     //update the score
     if(ball.x - ball.radius < 0){
         // the com wins
         com.score++;
         resetBall();
+
+        if(com.score == 4){
+            alert("You Lost");
+            resetBall();
+            com.score = 0;
+            user.score = 0;
+        }
     }else if(ball.x + ball.radius > cvs.width){
         // the user win
         user.score++;
         resetBall();
+
+        if(com.score == 4){
+            alert("Hurray! You Won");
+            resetBall();
+            com.score = 0;
+            user.score = 0;
+        }
+ 
     }
+
+    
 }
 
 
@@ -188,5 +205,7 @@ function game(){
 
 // loop 
 const framePerSecond = 50;
-setInterval(game,1000/framePerSecond);
+let interval = setInterval(game,1000/framePerSecond);
+
+
 
