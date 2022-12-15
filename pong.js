@@ -96,14 +96,104 @@ function render(){
 
 }
 
+// control the user padde
+
+cvs.addEventListener("mousemove", movePaddle);
+
+function movePaddle(evt){
+    let rect = cvs.getBoundingClientRect();
+    user.y = evt.clientY - rect.top - user.height/2;
+}
+
+
+//collision detection
+function collision(b,p){
+     b.top = b.y - b.radius;
+     b.bottom = b.y + b.radius;
+     b.left = b.x - b.radius;
+     b.right = b.x + b.radius;
+
+     p.top = p.y;
+     p.bottom = p.y + p.height;
+     p.left = p.x;
+     p.right = p.x + p.width;
+
+     return b.right > p.left && b.bottom > p.top && b.left < p.right &&
+     b.top < p.bottom;
+}
+
+//reset ball
+function resetBall(){
+    ball.x = cvs.width/2;
+    ball.y = cvs.height/2;
+
+    ball.speed = 5;
+    ball.velocitX = -ball.velocitX;
+}
+
 //update : pos,mov,score, ...
 function update(){
     ball.x += ball.velocitX;
     ball.y += ball.velocitY;
 
+    //simple AI to control the computer paddle
+    let computerLevel = 0.1;
+    com.y += (ball.y - (com.y + com.height/2)) * computerLevel;
+
     if(ball.y + ball.radius > cvs.height || ball.y - ball.radius < 0){
         ball.velocitY = -ball.velocitY;
     }
+
+    let player = (ball.x < cvs.width/2)? user:com;
+
+    if(collision(ball,player)){
+        //where the ball hit the player
+        let collidePoint = ball.y - (player.y + player.height/2);
+
+        //normalization
+        collidePoint = collidePoint/(player.height/2);
+
+        //calculate angle in Radian
+        let angleRad = collidePoint * Math.PI/4;
+
+        // x direction of the ball when it's hit
+        let direction = (ball.x < cvs.width/2) ? 1 : -1;
+
+        //change vel X and Y
+        ball.velocitX = direction * ball.speed * Math.cos(angleRad);
+        ball.velocitY = ball.speed * Math.sin(angleRad);
+
+        // everytime the ball hit a paddle, we increase its speed
+        ball.speed += 0.3;
+    }
+    
+    //update the score
+    if(ball.x - ball.radius < 0){
+        // the com wins
+        com.score++;
+        resetBall();
+
+        if(com.score == 4){
+            alert("You Lost");
+            resetBall();
+            com.score = 0;
+            user.score = 0;
+        }
+    }else if(ball.x + ball.radius > cvs.width){
+        // the user win
+        user.score++;
+        resetBall();
+
+        if(com.score == 4){
+            alert("Hurray! You Won");
+            resetBall();
+            com.score = 0;
+            user.score = 0;
+        }
+ 
+    }
+
+    
 }
 
 
@@ -115,5 +205,7 @@ function game(){
 
 // loop 
 const framePerSecond = 50;
-setInterval(game,1000/framePerSecond);
+let interval = setInterval(game,1000/framePerSecond);
+
+
 
