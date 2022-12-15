@@ -15,5 +15,8 @@ function drawCircle(x,y,r,color){
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x,y,r,0,Math.Pi*2,false);
-    ctx 
+    ctx.closePath();
+    ctx.fill();
 }
+
+drawCircle(100,100,50,"WHITE");
