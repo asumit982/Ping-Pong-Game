@@ -5,7 +5,7 @@ const ctx = cvs.getContext("2d");
 //create the user paddle
 const user = {
     x : 0,
-    y : cvs.height/2-100/2,
+    y : cvs.height/2 - 100/2,
     width : 10,
     height : 100,
     color : "WHITE",
@@ -14,8 +14,8 @@ const user = {
 
 //create the com paddle
 const com = {
-    x : cvs.width-10,
-    y : cvs.height/2-100/2,
+    x : cvs.width - 10,
+    y : cvs.height/2 - 100/2,
     width : 10,
     height : 100,
     color : "WHITE",
@@ -33,39 +33,9 @@ const ball = {
     color : "WHITE"
 }
 
-//Render the Game
-function render(){
-    //clear the canvas
-    drawRect(0,0,cvs.width,cvs.height,"BLACK");
-
-    //draw the net
-    drawNet();
-
-    drawText(user.score,cvs.width/4,cvs.height/5,"WHITE");
-    drawText(com.score,3*cvs.width/4,cvs.height/5,"WHITE");
-
-    //draw the user and com paddle
-    drawRect(user.x, user.color, user.width, user.height, user.color);    
-    drawRect(com.x, com.color, com.width, com.height, com.color);    
-
-    //draw the ball
-    drawCircle(ball.x,ball.y,ball.radius,ball.color);
-
-}
-
-
-
-//draw rect function
-function drawRect(x,y,w,h,color){
-    ctx.fillStyle = color;
-    ctx.fillRect(x,y,w,h); 
-}
-
-drawRect(0,0,cvs.width,cvs.height,"BLACK");
-
 //create the net
 const net = {
-    x : cvs.width - 1,
+    x : cvs.width/2 - 1,
     y : 0,
     width : 2,
     height : 10,
@@ -74,10 +44,18 @@ const net = {
 
 //draw the net
 function drawNet(){
-    for(let i =0; i<= cvs.height; i+=15){
-        drawNet(net.x, net.y + i, net.width, net.height, net.color);
+    for(let i = 0; i <= cvs.height; i+=15){
+        drawRect(net.x, net.y + i, net.width, net.height, net.color);
     }
 }
+
+
+//draw rect function
+function drawRect(x,y,w,h,color){
+    ctx.fillStyle = color;
+    ctx.fillRect(x,y,w,h); 
+}
+
 
 //draw Circle
 function drawCircle(x,y,r,color){
@@ -88,7 +66,6 @@ function drawCircle(x,y,r,color){
     ctx.fill();
 }
 
-drawCircle(100, 100, 50,"WHITE");
 
 //draw Text
 function drawText(text,x,y,color){
@@ -97,4 +74,35 @@ function drawText(text,x,y,color){
     ctx.fillText(text,x,y);
 }
 
-drawText("something",300,200,"WHITE");
+
+//Render the Game
+function render(){
+    //clear the canvas
+    drawRect(0,0,cvs.width,cvs.height,"BLACK");
+
+    //draw the net
+    drawNet();
+
+    //draw score
+    drawText(user.score,cvs.width/4,cvs.height/4,"WHITE");
+    drawText(com.score,3*cvs.width/4,cvs.height/4,"WHITE");
+
+    //draw the user and com paddle
+    drawRect(user.x,user.y,user.width,user.height,user.color);
+    drawRect(com.x,com.y,com.width,com.height,com.color);
+
+    //draw the ball
+    drawCircle(ball.x,ball.y,ball.radius,ball.color);
+
+}
+
+
+// game init
+
+function game(){
+    render();
+}
+
+// loop 
+const framePerSecond = 50;
+setInterval(game,1000/framePerSecond);
