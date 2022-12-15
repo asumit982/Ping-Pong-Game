@@ -63,6 +63,22 @@ function drawRect(x,y,w,h,color){
 
 drawRect(0,0,cvs.width,cvs.height,"BLACK");
 
+//create the net
+const net = {
+    x : cvs.width - 1,
+    y : 0,
+    width : 2,
+    height : 10,
+    color : "WHITE"
+}
+
+//draw the net
+function drawNet(){
+    for(let i =0; i<= cvs.height; i+=15){
+        drawNet(net.x, net.y + i, net.width, net.height, net.color);
+    }
+}
+
 //draw Circle
 function drawCircle(x,y,r,color){
     ctx.fillStyle = color;
