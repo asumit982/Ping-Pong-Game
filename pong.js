@@ -122,6 +122,15 @@ function collision(b,p){
      b.top < p.bottom;
 }
 
+//reset ball
+function resetBall(){
+    ball.x = cvs.width/2;
+    ball.y = cvs.height/2;
+
+    ball.speed = 5;
+    ball.velocitX = -ball.velocitX;
+}
+
 //update : pos,mov,score, ...
 function update(){
     ball.x += ball.velocitX;
@@ -156,8 +165,17 @@ function update(){
 
         // everytime the ball hit a paddle, we increase its speed
         ball.speed += 0.1;
-        
+    }
 
+    //update the score
+    if(ball.x - ball.radius < 0){
+        // the com wins
+        com.score++;
+        resetBall();
+    }else if(ball.x + ball.radius > cvs.width){
+        // the user win
+        user.score++;
+        resetBall();
     }
 }
 
